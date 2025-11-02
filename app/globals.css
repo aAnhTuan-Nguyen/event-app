@@ -163,7 +163,7 @@
     }
 
     ul {
-      @apply flex flex-row items-center gap-6 list-none;
+      @apply flex flex-row items-center gap-6;
     }
   }
 

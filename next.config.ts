@@ -19,6 +19,20 @@ const nextConfig: NextConfig = {
     ]
   },
 
+  // Cấu hình để cho phép load ảnh từ Cloudinary
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com'
+      }
+    ]
+  },
+
   // This is required to support PostHog trailing slash API requests
   skipTrailingSlashRedirect: true
 }
