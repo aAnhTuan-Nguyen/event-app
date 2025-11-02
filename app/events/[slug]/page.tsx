@@ -118,7 +118,7 @@ const EventDetailsPage = async ({ params }: { params: Promise<{ slug: string }> 
         <aside className='booking'>
           <div className='signup-card'>
             <h2 className='text-2xl font-bold mb-4'>Book your spot</h2>
-            <BookEvent eventId={data._id} slug={data.slug} />
+            <BookEvent eventId={data._id as string} slug={data.slug} />
           </div>
         </aside>
       </div>
@@ -127,7 +127,7 @@ const EventDetailsPage = async ({ params }: { params: Promise<{ slug: string }> 
       <section className='flex flex-col gap-4 pt-20 w-full'>
         <h2>Similar Events</h2>
         <div className='events'>
-          {similarEvents.length > 0 && similarEvents.map((event: IEvent) => <EventCard key={event._id} {...event} />)}
+          {similarEvents.length > 0 && similarEvents.map((event: IEvent) => <EventCard key={event.title} {...event} />)}
         </div>
       </section>
     </section>
