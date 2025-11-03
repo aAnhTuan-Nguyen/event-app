@@ -3,9 +3,7 @@ import Image from 'next/image'
 import type { IEvent } from '@/database'
 import BookEvent from '@/components/BookEvent'
 import EventCard from '@/components/EventCard'
-import { getSimilarEventsBySlug } from '@/lib/actions/event.actions'
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
+import { getSimilarEventsBySlug, getEventBySlug } from '@/lib/actions/event.actions'
 
 const EventDetailItem = ({ icon, label, alt }: { icon: string; label: string; alt: string }) => {
   return (
@@ -52,11 +50,11 @@ const EventTags = ({ tags }: { tags: string[] }) => {
 
 const EventDetailsPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params
-  const response = await fetch(`${BASE_URL}/api/events/${slug}`, {
-    cache: 'no-store'
-  })
 
-  if (!response.ok) {
+  // Dùng Server actions để truy cập database trực tiếp (tối ưu hơn fetch API)
+  const data = await getEventBySlug(slug)
+
+  if (!data) {
     return (
       <section id='event'>
         <div className='text-center'>
@@ -65,12 +63,6 @@ const EventDetailsPage = async ({ params }: { params: Promise<{ slug: string }> 
         </div>
       </section>
     )
-  }
-
-  const { data }: { data: IEvent } = await response.json()
-
-  if (!data) {
-    return <div>Error: Event not found</div>
   }
 
   const similarEvents: IEvent[] = await getSimilarEventsBySlug(slug)
