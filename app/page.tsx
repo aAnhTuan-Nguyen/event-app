@@ -1,12 +1,11 @@
 import EventCard from '@/components/EventCard'
 import ExploreButton from '@/components/ExploreButton'
 import { IEvent } from '@/database'
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
+import { getAllEvents } from '@/lib/actions/event.actions'
 
 const page = async () => {
-  const res = await fetch(`${BASE_URL}/api/events`)
-  const { events } = await res.json()
+  // Dùng Server actions để truy cập database trực tiếp (tối ưu hơn fetch API)
+  const events = await getAllEvents()
 
   return (
     <section>
